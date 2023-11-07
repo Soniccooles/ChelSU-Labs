@@ -9,7 +9,7 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Programm1;
 
-public class Programm // Класс программ
+public class Programm // Класс программ qqqeqeqeq
 {
     public static void Main(string[] args) //Функция главная
     {
