@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Dynamic;
@@ -103,7 +104,7 @@ public class Programm
         }
         return result;
     }
-    public static float Calculate(List<object> result)
+    public static float CalculateWithRPN(List<object> result)
     {
         int index = 0;
         float intermediateResult = 0;
@@ -122,41 +123,25 @@ public class Programm
             float num1 = float.Parse(Convert.ToString(result[index - 2]));
             float num2 = float.Parse(Convert.ToString(result[index - 1]));
             char op = Convert.ToChar(result[index]);
-            if (op == '*')
-            {
-                intermediateResult = num1 * num2;
-                result.RemoveAt(index);
-                result.RemoveAt(index - 1);
-                result.RemoveAt(index - 2);
-                result.Insert(index - 2, intermediateResult);
-            }
-            if (op == '/')
-            {
-                intermediateResult = num1 / num2;
-                result.RemoveAt(index);
-                result.RemoveAt(index - 1);
-                result.RemoveAt(index - 2);
-                result.Insert(index - 2, intermediateResult);
-            }
-            if (op == '+')
-            {
-                intermediateResult = num1 + num2;
-                result.RemoveAt(index);
-                result.RemoveAt(index - 1);
-                result.RemoveAt(index - 2);
-                result.Insert(index - 2, intermediateResult);
-            }
-            if (op == '-')
-            {
-                intermediateResult = num1 - num2;
-                result.RemoveAt(index);
-                result.RemoveAt(index - 1);
-                result.RemoveAt(index - 2);
-                result.Insert(index - 2, intermediateResult);
-            }
+            intermediateResult = Calculate(op, num1, num2);
+            result.RemoveAt(index);
+            result.RemoveAt(index - 1);
+            result.RemoveAt(index - 2);
+            result.Insert(index - 2, intermediateResult);
             index -= 2;
         }
         float finalResult = (float)result[0];
-        return finalResult;
+        return (float) result[0];
+    }
+    public static float Calculate(char op, float num1, float num2)
+    {
+        switch(op)
+        {
+            case '+': return num1 + num2;
+            case '-': return num1 - num2;
+            case '*': return num1 * num2;
+            case '/': return num1 / num2;
+            default: throw new Exception("Unknown operation");
+        }
     }
 }
