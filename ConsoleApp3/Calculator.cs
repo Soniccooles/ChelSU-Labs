@@ -11,16 +11,13 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Programm1;
 
-public class Programm // Класс программ qqqeqeqeq
+public class Programm
 {
-    public static void Main(string[] args) //Функция главная
+    public static void Main(string[] args)
     {
         while (true)
         {
             string input = Console.ReadLine().Replace(" ", "");
-            // Console.WriteLine(string.Join(' ', WriteOperands(input)));
-            // Console.WriteLine(string.Join(' ', WriteNumbers(input)));
-            // Console.WriteLine(WriteResult(input));
             Console.WriteLine(string.Join(' ', Calculate(ToRPN(Parse(input)))));
         }
     }
@@ -53,7 +50,6 @@ public class Programm // Класс программ qqqeqeqeq
     {
         List<object> result = new List<object>();
         Stack<char> stack = new Stack<char>();
-        Console.WriteLine(string.Join(',', newInput));
         for (int elem = 0; elem < newInput.Count; elem++)
         {
             if (newInput[elem] is float)
@@ -99,7 +95,6 @@ public class Programm // Класс программ qqqeqeqeq
     public static float Calculate(List<object> result)
     {
         int index = 0;
-        Console.WriteLine(string.Join(' ', result));
         float intermediateResult = 0;
         while (result.Count != 1)
         {
