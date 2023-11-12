@@ -74,11 +74,22 @@ public class Programm
             {
                 stack.Push(Convert.ToChar(newInput[elem]));
             }
-            if (Convert.ToChar(newInput[elem]) == '+' || Convert.ToChar(newInput[elem]) == '-')
+            if (Convert.ToChar(newInput[elem]) == '-')
             {
                 if (stack.Count != 0)
                 {
                     if (stack.Peek() == '*' || stack.Peek() == '/')
+                    {
+                        result.Add(stack.Pop());
+                    }
+                }
+                stack.Push(Convert.ToChar(newInput[elem]));
+            }
+            if (Convert.ToChar(newInput[elem]) == '+')
+            {
+                if (stack.Count != 0)
+                {
+                    if (stack.Peek() == '*' || stack.Peek() == '/' || stack.Peek() == '-')
                     {
                         result.Add(stack.Pop());
                     }
@@ -107,6 +118,7 @@ public class Programm
                     break;
                 }
             }
+            
             float num1 = float.Parse(Convert.ToString(result[index - 2]));
             float num2 = float.Parse(Convert.ToString(result[index - 1]));
             char op = Convert.ToChar(result[index]);
@@ -144,7 +156,7 @@ public class Programm
             }
             index -= 2;
         }
-        float finalResult = (float) result[0];
+        float finalResult = (float)result[0];
         return finalResult;
     }
 }
