@@ -30,7 +30,6 @@ public class Programm // Класс программ qqqeqeqeq
         string number = "";
         foreach (var element in input + ' ')
         {
-
             if (Char.IsDigit(element) && (element != '(' || element != ')') || (element == ','))
             {
                 number += element;
@@ -100,27 +99,57 @@ public class Programm // Класс программ qqqeqeqeq
     public static float Calculate(List<object> result)
     {
         int index = 0;
-        for (int i = 0; i <= result.Count; i++)
+        Console.WriteLine(string.Join(' ', result));
+        float intermediateResult = 0;
+        while (result.Count != 1)
         {
-            if (Convert.ToChar(result[i]) == '*' || Convert.ToChar(result[i]) == '/' || Convert.ToChar(result[i]) == '+' ||
-                Convert.ToChar(result[i]) == '-')
+            for (int i = 0; i <= result.Count; i++)
             {
-                index = i;
-                break;
+                if (Convert.ToString(result[i]) == "*" || Convert.ToString(result[i]) == "/" || Convert.ToString(result[i]) == "+" ||
+                    Convert.ToString(result[i]) == "-")
+                {
+                    index = i;
+                    break;
+                }
             }
+            float num1 = float.Parse(Convert.ToString(result[index - 2]));
+            float num2 = float.Parse(Convert.ToString(result[index - 1]));
+            char op = Convert.ToChar(result[index]);
+            if (op == '*')
+            {
+                intermediateResult = num1 * num2;
+                result.RemoveAt(index);
+                result.RemoveAt(index - 1);
+                result.RemoveAt(index - 2);
+                result.Insert(index - 2, intermediateResult);
+            }
+            if (op == '/')
+            {
+                intermediateResult = num1 / num2;
+                result.RemoveAt(index);
+                result.RemoveAt(index - 1);
+                result.RemoveAt(index - 2);
+                result.Insert(index - 2, intermediateResult);
+            }
+            if (op == '+')
+            {
+                intermediateResult = num1 + num2;
+                result.RemoveAt(index);
+                result.RemoveAt(index - 1);
+                result.RemoveAt(index - 2);
+                result.Insert(index - 2, intermediateResult);
+            }
+            if (op == '-')
+            {
+                intermediateResult = num1 - num2;
+                result.RemoveAt(index);
+                result.RemoveAt(index - 1);
+                result.RemoveAt(index - 2);
+                result.Insert(index - 2, intermediateResult);
+            }
+            index -= 2;
         }
-
-        float num1 = (float) result[index-2];
-        float num2 = (float) result[index-1];
-        char op = Convert.ToChar(result[index]);
-        float finalResult = 0;
-        switch (op)
-        {
-            case '*': return num1 * num2;
-            case '/': return num1 / num2;
-            case '+': return num1 + num2;
-            case '-': return num1 - num2;
-        }
+        float finalResult = (float) result[0];
         return finalResult;
     }
 }
