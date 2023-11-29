@@ -1,147 +1,197 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.Design;
-using System.Dynamic;
-using System.Globalization;
-using System.Linq.Expressions;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading.Tasks.Dataflow;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Programm1;
-
-public class Programm
+namespace LabCalculator
 {
-    public static void Main(string[] args)
+    public abstract class Token
     {
-        while (true)
+        
+    }
+
+    public class Number : Token
+    {
+        public float Value { get; }
+
+        public Number(float value)
         {
-            string input = Console.ReadLine().Replace(" ", "");
-            Console.WriteLine(string.Join(' ', Calculate(ToRPN(Parse(input)))));
+            Value = value;
+        }
+        public override string ToString() 
+        {
+            return "" + Value;
+        }
+        
+    }
+
+    public class Operation : Token
+    {
+        public char Operator { get; }
+
+        public Operation(char op)
+        {
+            Operator = op;
+        }
+        public override string ToString()
+        {
+            return "" + Operator;
         }
     }
-    public static List<object> Parse(string input)
+
+    public class Parenthesis : Token
     {
-        List<object> list = new List<object>();
-        string number = "";
-        foreach (var element in input + ' ')
+        public char ParenthesisType { get; }
+
+        public Parenthesis(char type)
         {
-            if (Char.IsDigit(element) && (element != '(' || element != ')') || (element == ','))
-            {
-                number += element;
-            }
+            ParenthesisType = type;
+        }
+        public override string ToString()
+        {
+            return "" + ParenthesisType;
+        }
+    }
 
-            else if (number != "")
+    public class Calculator
+    {
+        public static void Main(string[] args)
+        {
+            while (true)
             {
-                list.Add(float.Parse(number));
-                number = "";
-            }
-
-            if (element == '*' || element == '/' || element == '+' || element == '-' || element == '(' || element == ')')
-            {
-                list.Add(element);
-                continue;
+                string input = Console.ReadLine().Replace(" ", "");
+                List<Token> parsedInput = Parse(input);
+                List<Token> rpn = ToRPN(parsedInput);
+                float result = CalculateWithRPN(rpn);
+                Console.WriteLine(string.Join(" ", parsedInput));
+                Console.WriteLine(string.Join(" ", rpn));
+                Console.WriteLine(result);
             }
         }
-        return list;
-    }
-    public static List<object> ToRPN(List<object> newInput)
-    {
-        List<object> result = new List<object>();
-        Stack<char> stack = new Stack<char>();
-        for (int elem = 0; elem < newInput.Count; elem++)
+
+        public static List<Token> Parse(string input)
         {
-            if (newInput[elem] is float)
+            List<Token> tokenList = new List<Token>();
+            string number = "";
+            foreach (var element in input + ' ')
             {
-                result.Add(newInput[elem]);
-                continue;
-            }
-            if (Convert.ToChar(newInput[elem]) == '(')
-            {
-                stack.Push(Convert.ToChar(newInput[elem]));
-            }
-            if (Convert.ToChar(newInput[elem]) == ')')
-            {
-                while (stack.Peek() != '(')
+                if (char.IsDigit(element) || element == '.')
                 {
-                    result.Add(stack.Pop());
+                    number += element;
+                    continue;
                 }
-                if (stack.Peek() == '(')
-                    stack.Pop();
-            }
-            if (Convert.ToChar(newInput[elem]) == '*' || Convert.ToChar(newInput[elem]) == '/')
-            {
-                stack.Push(Convert.ToChar(newInput[elem]));
-            }
-            if (Convert.ToChar(newInput[elem]) == '-')
-            {
-                if (stack.Count != 0)
+                else if (!string.IsNullOrEmpty(number))
                 {
-                    if (stack.Peek() == '*' || stack.Peek() == '/')
+                    tokenList.Add(new Number(float.Parse(number)));
+                    number = "";
+                }
+
+                if (element == '*' || element == '/' || element == '+' || element == '-')
+                {
+                    tokenList.Add(new Operation(element));
+                    continue;
+                }
+
+                if (element == '(' || element == ')')
+                {
+                    tokenList.Add(new Parenthesis(element));
+                }
+            }
+            return tokenList;
+        }
+
+        public static List<Token> ToRPN(List<Token> input)
+        {
+            List<Token> result = new List<Token>();
+            Stack<Token> stack = new Stack<Token>();
+
+            foreach (var token in input)
+            {
+                if (token is Number)
+                {
+                    result.Add(token);
+                }
+                else if (token is Operation)
+                {
+                    while (stack.Count > 0 && stack.Peek() is Operation &&
+                           GetPriority((stack.Peek() as Operation).Operator) >= GetPriority((token as Operation).Operator))
                     {
                         result.Add(stack.Pop());
                     }
+                    stack.Push(token);
                 }
-                stack.Push(Convert.ToChar(newInput[elem]));
-            }
-            if (Convert.ToChar(newInput[elem]) == '+')
-            {
-                if (stack.Count != 0)
+                else if (token is Parenthesis)
                 {
-                    if (stack.Peek() == '*' || stack.Peek() == '/' || stack.Peek() == '-')
+                    if ((token as Parenthesis).ParenthesisType == '(')
                     {
-                        result.Add(stack.Pop());
+                        stack.Push(token);
+                    }
+                    else if ((token as Parenthesis).ParenthesisType == ')')
+                    {
+                        while (stack.Count > 0 && !(stack.Peek() is Parenthesis) && ((stack.Peek() as Parenthesis).ParenthesisType == '('))
+                        {
+                            result.Add(stack.Pop());
+                        }
+
+                        if (stack.Count == 0 || !(stack.Peek() is Parenthesis) || ((stack.Peek() as Parenthesis).ParenthesisType != '('))
+                        {
+                            throw new Exception("Invalid expression: mismatched parentheses");
+                        }
+
+                        stack.Pop();
                     }
                 }
-                stack.Push(Convert.ToChar(newInput[elem]));
             }
-        }
-        while (stack.Contains('+') || stack.Contains('-') || stack.Contains('*') || stack.Contains('/'))
-        {
-            result.Add(stack.Pop());
-        }
-        return result;
-    }
-    public static float CalculateWithRPN(List<object> result)
-    {
-        int index = 0;
-        float intermediateResult = 0;
-        while (result.Count != 1)
-        {
-            for (int i = 0; i <= result.Count; i++)
+
+            while (stack.Count > 0)
             {
-                if (Convert.ToString(result[i]) == "*" || Convert.ToString(result[i]) == "/" || Convert.ToString(result[i]) == "+" ||
-                    Convert.ToString(result[i]) == "-")
+                result.Add(stack.Pop());
+            }
+
+            return result;
+        }
+
+        public static float CalculateWithRPN(List<Token> rpn)
+        {
+            Stack<float> stack = new Stack<float>();
+
+            foreach (var token in rpn)
+            {
+                if (token is Number)
                 {
-                    index = i;
-                    break;
+                    stack.Push((token as Number).Value);
+                }
+                else if (token is Operation)
+                {
+                    float num2 = stack.Pop();
+                    float num1 = stack.Pop();
+                    char op = (token as Operation).Operator;
+                    float intermediateResult = Calculate(op, num1, num2);
+                    stack.Push(intermediateResult);
                 }
             }
-            
-            float num1 = float.Parse(Convert.ToString(result[index - 2]));
-            float num2 = float.Parse(Convert.ToString(result[index - 1]));
-            char op = Convert.ToChar(result[index]);
-            intermediateResult = Calculate(op, num1, num2);
-            result.RemoveAt(index);
-            result.RemoveAt(index - 1);
-            result.RemoveAt(index - 2);
-            result.Insert(index - 2, intermediateResult);
-            index -= 2;
+
+            return stack.Peek();
         }
-        float finalResult = (float)result[0];
-        return (float) result[0];
-    }
-    public static float Calculate(char op, float num1, float num2)
-    {
-        switch(op)
+
+        public static float Calculate(char op, float num1, float num2)
         {
-            case '+': return num1 + num2;
-            case '-': return num1 - num2;
-            case '*': return num1 * num2;
-            case '/': return num1 / num2;
-            default: throw new Exception("Unknown operation");
+            switch (op)
+            {
+                case '+': return num1 + num2;
+                case '-': return num1 - num2;
+                case '*': return num1 * num2;
+                case '/': return num1 / num2;
+                default: throw new Exception("Unknown operation");
+            }
+        }
+
+        public static int GetPriority(char op)
+        {
+            if (op == '*' || op == '/')
+                return 2;
+            if (op == '+' || op == '-')
+                return 1;
+            return 0;
         }
     }
 }
