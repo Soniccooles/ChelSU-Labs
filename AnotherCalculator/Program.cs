@@ -1,5 +1,6 @@
 ﻿
 using System.Globalization;
+using System.Numerics;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace AnotherCalculator
@@ -302,26 +303,94 @@ namespace AnotherCalculator
         }
         public static string Operate()
         {
-            Console.WriteLine("Введите два числа в одной СС");
+            Console.WriteLine("Введите два числа, их СС, а затем операцию сложения");
             string input = Console.ReadLine();
             string[] newInput = input.Split(" ");
+            string op = newInput[3];
             if (newInput.Length != 4)
             {
                 return $"Введите 4 числа, а не {newInput.Length}";
             }
-            if (!int.TryParse(newInput[3], out int result))
+            if (!int.TryParse(newInput[2], out int result))
             {
-                return "Система должна быть числом, а не цифрой.";
+                return "СС должна быть числом.";
             }
-            bool firstCheck = CheckSystem(newInput[0], newInput[1]);
-            bool secondCheck = CheckSystem(newInput[2], newInput[3]);
-            if ((firstCheck && secondCheck) && (newInput[1] == newInput[3]))
+            if ((newInput[3] != "+" && newInput[3] != "-" && newInput[3] != "*") || op.Length != 1)
             {
-                int decimalFirstNumber = Convert.ToInt32(newInput[0], Convert.ToInt32(newInput[1]));
-                int decimalSecondNumber = Convert.ToInt32(newInput[2], Convert.ToInt32(newInput[3]));
-                return Convert.ToString(decimalFirstNumber + decimalSecondNumber);
+                return "Неверный ввод, введите последним символом операцию " + @"+" + "," + @"-" + "," + @"*";  
             }
-            return "Неверный ввод.";
+            bool firstCheck = CheckSystem(newInput[0], newInput[2]);
+            bool secondCheck = CheckSystem(newInput[1], newInput[2]);
+            string firstNum = newInput[0];
+            string secondNum = newInput[1];
+            int nBase = result;
+            string maxNum;
+            string minNum;
+            if (firstNum.Length >= secondNum.Length)
+            {
+                maxNum = firstNum;
+                minNum = secondNum;
+            }
+            else
+            {
+                maxNum = secondNum;
+                minNum = firstNum;
+            }
+            if (firstCheck && secondCheck)
+            {
+                switch (op)
+                {
+                    case "+":
+                        return AddNumbers(maxNum, minNum, nBase);
+                    case "-":
+                        return SubstractNumbers(maxNum, minNum, nBase);
+                    case "*":
+                        return MultiplyNumbers(maxNum, minNum, nBase);
+                    default:
+                        return "Знака " + $"{op} нет";
+                }
+
+            }
+            else return "Неверный ввод. Некорректная СС у одного из чисел";
+        }
+        public static string AddNumbers(string maxNum, string minNum, int numberBase)
+        {
+            int carry = 0;
+            string sum = "";
+
+            for (int i = 0; i < maxNum.Length; i++)
+            {
+                int digit1 = GetDigitValue(maxNum, i);
+                int digit2 = GetDigitValue(minNum, i);
+
+                int digitSum = digit1 + digit2 + carry;
+                carry = digitSum / numberBase;
+                digitSum = digitSum % numberBase;
+
+                sum = digitSum.ToString() + sum;
+            }
+
+            if (carry > 0)
+                sum = carry.ToString() + sum;
+
+            return sum;
+        }
+        
+        public static string SubstractNumbers(string maxNum, string minNum, int numberBase)
+        {
+            return "substracted";
+        }
+        public static string MultiplyNumbers(string maxNum, string minNum, int numberBase)
+        {
+            return "Multiplied";
+        }
+        public static int GetDigitValue(string number, int position)
+        {
+            if (position < 0 || position >= number.Length)
+                return 0;
+
+            char digitChar = number[number.Length - position - 1];
+            return int.Parse(digitChar.ToString());
         }
     }
 }

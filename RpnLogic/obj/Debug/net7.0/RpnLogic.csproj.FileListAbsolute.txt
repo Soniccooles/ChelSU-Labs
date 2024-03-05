@@ -1,0 +1,12 @@
+C:\Users\Андрей\source\repos\RpnLogic\bin\Debug\net7.0\RpnLogic.deps.json
+C:\Users\Андрей\source\repos\RpnLogic\bin\Debug\net7.0\RpnLogic.dll
+C:\Users\Андрей\source\repos\RpnLogic\bin\Debug\net7.0\RpnLogic.pdb
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.AssemblyInfoInputs.cache
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.AssemblyInfo.cs
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.csproj.CoreCompileInputs.cache
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.sourcelink.json
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.dll
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\refint\RpnLogic.dll
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\RpnLogic.pdb
+C:\Users\Андрей\source\repos\RpnLogic\obj\Debug\net7.0\ref\RpnLogic.dll
