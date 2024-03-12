@@ -1,4 +1,0 @@
-﻿  CPPLabs.cpp
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(1,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(53,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(56,1): error C2143: синтаксическая ошибка: отсутствие ";" перед "}"

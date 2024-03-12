@@ -1,7 +1,0 @@
-﻿  CPPLabs.cpp
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(1,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(6,6): warning C4101: i: неиспользованная локальная переменная
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(57,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(62,16): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-C:\Users\Андрей\source\repos\CPPLabs\CPPLabs.cpp(63,19): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
-  CPPLabs.vcxproj -> C:\Users\Андрей\source\repos\CPPLabs\x64\Debug\CPPLabs.exe
