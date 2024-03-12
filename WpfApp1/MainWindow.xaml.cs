@@ -22,11 +22,13 @@ namespace WPFCalculator
             InitializeComponent();
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e) { }
+
+
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            lbl.Content = "Результат:   " + RpnCalculator.CalculateExpression(tbInput.Text);
+            lbl.Content = "Результат:   " + RpnCalculator.CalculateExpression(tbxInput.Text);
         }
-        
 
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e) { }
     }
 }

@@ -9,13 +9,14 @@ namespace CalculatorApp
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите выражение");
             while (true)
             {
                 string input = Console.ReadLine().Replace(" ", "");
                 List<Token> parsedInput = RpnCalculator.Parse(input);
                 List<Token> rpn = RpnCalculator.ToRPN(parsedInput);
                 float result = RpnCalculator.CalculateWithRPN(rpn);
-                Console.WriteLine("Result: " + result);
+                Console.WriteLine("Результат: " + result);
             }
         }
     }
