@@ -21,14 +21,14 @@ namespace WPFCalculator
         {
             InitializeComponent();
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e) { }
+        private void tbx_TextChanged_Expression(object sender, TextChangedEventArgs e) { }
 
 
-        private void btn_Click(object sender, RoutedEventArgs e)
+        private void btn_Calculate(object sender, RoutedEventArgs e)
         {
-            lbl.Content = "Результат:   " + RpnCalculator.CalculateExpression(tbxInput.Text);
+            lblResult.Content = "Результат:   " + RpnCalculator.CalculateExpression(tbxInput.Text, tbxVarX.Text);
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e) { }
+        private void tbx_TextChanged_xVar(object sender, TextChangedEventArgs e) { }
     }
 }

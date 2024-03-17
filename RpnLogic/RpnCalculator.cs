@@ -6,7 +6,7 @@ namespace RpnLogic
 {
     public abstract class Token
     {
-        
+
     }
 
     class Number : Token
@@ -17,11 +17,11 @@ namespace RpnLogic
         {
             Value = value;
         }
-        public override string ToString() 
+        public override string ToString()
         {
             return "" + Value;
         }
-        
+
     }
 
     class Operation : Token
@@ -54,20 +54,22 @@ namespace RpnLogic
 
     public class RpnCalculator
     {
-        public static float CalculateExpression(string userInput)
+        public static float CalculateExpression(string userInput, string x)
         {
-            float result = CalculateWithRPN(ToRPN(Parse(userInput)));
+            string variable = x;
+            float result = CalculateWithRPN(ToRPN(Parse(userInput, variable)));
             return result;
         }
-        public static List<Token> Parse(string input)
-        {
+        public static List<Token> Parse(string input, string variable)
+        { 
             List<Token> tokenList = new List<Token>();
+            string newInput = input.Replace("x", variable) + ' ';
             string number = "";
-            foreach (var element in input + ' ')
+            for (int i = 0; i < newInput.Length;  i++)
             {
-                if (char.IsDigit(element) || element == '.')
+                if (char.IsDigit(newInput[i]) || newInput[i] == '.')
                 {
-                    number += element;
+                    number += newInput[i];
                     continue;
                 }
                 else if (!string.IsNullOrEmpty(number))
@@ -76,15 +78,15 @@ namespace RpnLogic
                     number = "";
                 }
 
-                if (element == '*' || element == '/' || element == '+' || element == '-')
+                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-')
                 {
-                    tokenList.Add(new Operation(element));
+                    tokenList.Add(new Operation(newInput[i]));
                     continue;
                 }
 
-                if (element == '(' || element == ')')
+                if (newInput[i] == '(' || newInput[i] == ')')
                 {
-                    tokenList.Add(new Parenthesis(element));
+                    tokenList.Add(new Parenthesis(newInput[i]));
                 }
             }
             return tokenList;
@@ -118,16 +120,10 @@ namespace RpnLogic
                     }
                     else if ((token as Parenthesis).ParenthesisType == ')')
                     {
-                        while (stack.Count > 0 && !(stack.Peek() is Parenthesis) && ((stack.Peek() as Parenthesis).ParenthesisType == '('))
+                        while (stack.Count > 0 && !(stack.Peek() is Parenthesis))
                         {
                             result.Add(stack.Pop());
                         }
-
-                        if (stack.Count == 0 || !(stack.Peek() is Parenthesis) || ((stack.Peek() as Parenthesis).ParenthesisType != '('))
-                        {
-                            throw new Exception("Invalid expression: mismatched parentheses");
-                        }
-
                         stack.Pop();
                     }
                 }
@@ -135,6 +131,11 @@ namespace RpnLogic
 
             while (stack.Count > 0)
             {
+                if (stack.Peek() is Parenthesis)
+                {
+                    throw new Exception("Invalid expression: mismatched parentheses");
+                }
+
                 result.Add(stack.Pop());
             }
 

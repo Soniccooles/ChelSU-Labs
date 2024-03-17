@@ -12,8 +12,9 @@ namespace CalculatorApp
             Console.WriteLine("Введите выражение");
             while (true)
             {
+                
                 string input = Console.ReadLine().Replace(" ", "");
-                List<Token> parsedInput = RpnCalculator.Parse(input);
+               List<Token> parsedInput = RpnCalculator.Parse(input, "");
                 List<Token> rpn = RpnCalculator.ToRPN(parsedInput);
                 float result = RpnCalculator.CalculateWithRPN(rpn);
                 Console.WriteLine("Результат: " + result);

@@ -7,20 +7,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="tbxInput" HorizontalAlignment="Left" Margin="192,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="575" TextChanged="TextBox_TextChanged" FontSize="20" FontFamily="Times New Roman" Height="51">
+        <TextBox x:Name="tbxInput" HorizontalAlignment="Left" Margin="192,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="575" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="51">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <Button Content="Вычислить" HorizontalAlignment="Left" Margin="29,243,0,0" VerticalAlignment="Top" Height="55" Width="176" FontSize="20" FontFamily="Times New Roman" Click="btn_Click">
+        <Button Content="Вычислить" HorizontalAlignment="Left" Margin="29,243,0,0" VerticalAlignment="Top" Height="55" Width="176" FontSize="20" FontFamily="Times New Roman" Click="btn_Calculate">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
-        <Label x:Name="lbl" Content="Результат:" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" Width="620" Height="50" FontSize="20"/>
+        <Label x:Name="lblResult" Content="Результат:" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" Width="620" Height="50" FontSize="20"/>
         <TextBlock x:Name="tbkExpression" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="20" FontFamily="Times New Roman"><Run Text="Введите"/><Run Language="ru-ru" Text=" выражение"/></TextBlock>
         <TextBlock x:Name="tbkVarX" HorizontalAlignment="Left" Margin="159,102,0,0" TextWrapping="Wrap" Text="X:" VerticalAlignment="Top" Width="28" Height="22" FontSize="20" FontFamily="Times New Roman" RenderTransformOrigin="2.844,1.083"/>
-        <TextBox x:Name="tbxVarX" HorizontalAlignment="Left" Margin="187,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1" FontFamily="Times New Roman" FontSize="20" Height="28" SelectionOpacity="1" UndoLimit="98">
+        <TextBox x:Name="tbxVarX" HorizontalAlignment="Left" Margin="187,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="tbx_TextChanged_xVar" FontFamily="Times New Roman" FontSize="20" Height="28" SelectionOpacity="1" UndoLimit="98">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
