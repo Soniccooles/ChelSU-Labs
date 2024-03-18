@@ -56,8 +56,7 @@ namespace RpnLogic
     {
         public static float CalculateExpression(string userInput, string x)
         {
-            string variable = x;
-            float result = CalculateWithRPN(ToRPN(Parse(userInput, variable)));
+            float result = CalculateWithRPN(ToRPN(Parse(userInput, x)));
             return result;
         }
         public static List<Token> Parse(string input, string variable)
@@ -78,8 +77,13 @@ namespace RpnLogic
                     number = "";
                 }
 
-                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-')
-                {
+                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-') 
+                { //Проверку на отр. числа буду делать тут
+                    if ((newInput[i] == '-' && i==0) || (newInput[i] == '-' && newInput[i-1] == '('))
+                    {
+                        number += newInput[i];
+                        continue;
+                    }
                     tokenList.Add(new Operation(newInput[i]));
                     continue;
                 }

@@ -14,7 +14,9 @@ namespace CalculatorApp
             {
                 
                 string input = Console.ReadLine().Replace(" ", "");
-               List<Token> parsedInput = RpnCalculator.Parse(input, "");
+                Console.WriteLine("Выражение: " + input + "\n" + "Теперь введите значение переменной X, если она есть. Если нет, то нажмите enter.");
+                string varX = Console.ReadLine();
+               List<Token> parsedInput = RpnCalculator.Parse(input, varX);
                 List<Token> rpn = RpnCalculator.ToRPN(parsedInput);
                 float result = RpnCalculator.CalculateWithRPN(rpn);
                 Console.WriteLine("Результат: " + result);
