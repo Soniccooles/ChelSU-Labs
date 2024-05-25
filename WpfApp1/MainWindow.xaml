@@ -7,41 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="tbxStart" HorizontalAlignment="Left" Margin="660,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
+        <TextBox x:Name="tbxInput" HorizontalAlignment="Left" Margin="192,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="575" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="51">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <Button x:Name="Calculatebtn" Content="Вычислить" HorizontalAlignment="Left" Margin="658,323,0,0" VerticalAlignment="Top" Height="25" Width="130" FontSize="20" FontFamily="Times New Roman" Click="btn_Calculate" BorderBrush="#FF9E1B1B" Background="#FFA78FFF">
+        <Button Content="Вычислить" HorizontalAlignment="Left" Margin="29,243,0,0" VerticalAlignment="Top" Height="55" Width="176" FontSize="20" FontFamily="Times New Roman" Click="btn_Calculate">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
-        <TextBlock x:Name="tbkExpression" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" FontSize="20" FontFamily="Times New Roman"><Run Text="Введите"/><Run Text=" "/><Run Language="ru-ru" Text="уравнение графика"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-        <TextBox x:Name="tbxEnd" HorizontalAlignment="Left" Margin="658,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_xVar" FontFamily="Times New Roman" FontSize="20" Height="30" SelectionOpacity="1" UndoLimit="98" Background="#FFA78FFF">
+        <Label x:Name="lblResult" Content="Результат:" HorizontalAlignment="Center" Margin="0,188,0,0" VerticalAlignment="Top" Width="620" Height="50" FontSize="20"/>
+        <TextBlock x:Name="tbkExpression" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="20" FontFamily="Times New Roman"><Run Text="Введите"/><Run Language="ru-ru" Text=" выражение"/></TextBlock>
+        <TextBlock x:Name="tbkVarX" HorizontalAlignment="Left" Margin="159,102,0,0" TextWrapping="Wrap" Text="X:" VerticalAlignment="Top" Width="28" Height="22" FontSize="20" FontFamily="Times New Roman" RenderTransformOrigin="2.844,1.083"/>
+        <TextBox x:Name="tbxVarX" HorizontalAlignment="Left" Margin="187,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="tbx_TextChanged_xVar" FontFamily="Times New Roman" FontSize="20" Height="28" SelectionOpacity="1" UndoLimit="98">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <TextBox x:Name="tbxStep" HorizontalAlignment="Left" Margin="658,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
-            <TextBox.Effect>
-                <DropShadowEffect/>
-            </TextBox.Effect>
-        </TextBox>
-        <TextBox x:Name="tbxRange" HorizontalAlignment="Left" Margin="658,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
-            <TextBox.Effect>
-                <DropShadowEffect/>
-            </TextBox.Effect>
-        </TextBox>
-        <TextBlock x:Name="tbkStart" HorizontalAlignment="Left" Margin="660,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="78" FontSize="18" FontFamily="Arial"><Run Language="ru-ru" Text="Начало"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-        <TextBlock x:Name="tbkEnd" HorizontalAlignment="Left" Margin="660,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="65" FontSize="18" FontFamily="Arial" Text="Конец"/>
-        <TextBlock x:Name="tbkStep" HorizontalAlignment="Left" Margin="660,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="45" FontSize="18" FontFamily="Arial" Text="Шаг" RenderTransformOrigin="1.564,1.048"/>
-        <TextBlock x:Name="tbkRange" HorizontalAlignment="Left" Margin="660,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="90" FontSize="18" FontFamily="Arial" RenderTransformOrigin="0.552,1.767"><Run Language="ru-ru" Text="Масштаб"/><LineBreak/><Run/></TextBlock>
-        <TextBox x:Name="tbxStart_Копировать" HorizontalAlignment="Left" Margin="256,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="388" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
-            <TextBox.Effect>
-                <DropShadowEffect/>
-            </TextBox.Effect>
-        </TextBox>
-        <Canvas x:Name="graphicCanvas" Margin="10,91,156,80"/>
+
     </Grid>
 </Window>
