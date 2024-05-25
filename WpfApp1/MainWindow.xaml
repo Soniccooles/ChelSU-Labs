@@ -37,7 +37,7 @@
         <TextBlock x:Name="tbkEnd" HorizontalAlignment="Left" Margin="660,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="65" FontSize="18" FontFamily="Arial" Text="Конец"/>
         <TextBlock x:Name="tbkStep" HorizontalAlignment="Left" Margin="660,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="45" FontSize="18" FontFamily="Arial" Text="Шаг" RenderTransformOrigin="1.564,1.048"/>
         <TextBlock x:Name="tbkRange" HorizontalAlignment="Left" Margin="660,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="90" FontSize="18" FontFamily="Arial" RenderTransformOrigin="0.552,1.767"><Run Language="ru-ru" Text="Масштаб"/><LineBreak/><Run/></TextBlock>
-        <TextBox x:Name="tbxStart_Копировать" HorizontalAlignment="Left" Margin="256,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="388" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
+        <TextBox x:Name="tbxExpression" HorizontalAlignment="Left" Margin="256,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="388" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>

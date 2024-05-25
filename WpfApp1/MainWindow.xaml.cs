@@ -27,7 +27,8 @@ namespace WPFCalculator
         private void tbx_TextChanged_Rights(object sender, TextChangedEventArgs e) { }
         private void btn_Click(object sender, RoutedEventArgs e) 
         {
-            CanvasDrawer.RefreshGraphic(tbkExpression, tbkStart, tbkEnd, tbkStep, tbkRange);
+            CanvasDrawer canvasDrawer = new CanvasDrawer();
+            canvasDrawer.RefreshGraphic(tbxExpression.Text, tbxStart.Text, tbxEnd.Text, tbxStep.Text, tbxRange.Text);
         }
     }
 }
