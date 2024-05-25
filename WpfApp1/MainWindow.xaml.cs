@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ConsoleCalculator;
 using RpnLogic;
 
 namespace WPFCalculator
@@ -23,12 +24,10 @@ namespace WPFCalculator
         }
         private void tbx_TextChanged_Expression(object sender, TextChangedEventArgs e) { }
 
-
-        private void btn_Calculate(object sender, RoutedEventArgs e)
+        private void tbx_TextChanged_Rights(object sender, TextChangedEventArgs e) { }
+        private void btn_Click(object sender, RoutedEventArgs e) 
         {
-            lblResult.Content = "Результат:   " + RpnCalculator.CalculateExpression(tbxInput.Text, tbxVarX.Text);
+            CanvasDrawer.RefreshGraphic(tbkExpression, tbkStart, tbkEnd, tbkStep, tbkRange);
         }
-
-        private void tbx_TextChanged_xVar(object sender, TextChangedEventArgs e) { }
     }
 }
