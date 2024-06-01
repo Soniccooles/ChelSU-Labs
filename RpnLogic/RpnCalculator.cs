@@ -54,19 +54,20 @@ namespace RpnLogic
 
     public class RpnCalculator
     {
-        public static float CalculateExpression(string userInput, string x)
+        public static double CalculateExpression(string userInput, string x)
         {
-            float result = CalculateWithRPN(ToRPN(Parse(userInput, x)));
+            double result = CalculateWithRPN(ToRPN(Parse(userInput, x)));
             return result;
         }
         public static List<Token> Parse(string input, string variable)
-        { 
+        {
             List<Token> tokenList = new List<Token>();
-            string newInput = input.Replace("x", variable) + ' ';
+
+            string newInput = ((input.Replace("x", '(' + variable + ')')).Replace("-(", "-1*(") + ' ').Replace(".", ",");
             string number = "";
-            for (int i = 0; i < newInput.Length;  i++)
+            for (int i = 0; i < newInput.Length; i++)
             {
-                if (char.IsDigit(newInput[i]) || newInput[i] == '.')
+                if (char.IsDigit(newInput[i]) || newInput[i] == ',')
                 {
                     number += newInput[i];
                     continue;
@@ -77,9 +78,9 @@ namespace RpnLogic
                     number = "";
                 }
 
-                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-') 
-                { //Проверку на отр. числа буду делать тут
-                    if ((newInput[i] == '-' && i==0) || (newInput[i] == '-' && newInput[i-1] == '('))
+                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-')
+                {
+                    if ((newInput[i] == '-' && i == 0) || (newInput[i] == '-' && newInput[i - 1] == '('))
                     {
                         number += newInput[i];
                         continue;

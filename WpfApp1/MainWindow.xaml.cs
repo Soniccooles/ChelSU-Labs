@@ -1,15 +1,11 @@
-﻿using System.Text;
+﻿using ConsoleCalculator;
+using System.Drawing.Drawing2D;
+using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ConsoleCalculator;
-using RpnLogic;
+using ScottPlot;
+using System.Windows.Media.Effects;
 
 namespace WPFCalculator
 {
@@ -22,13 +18,21 @@ namespace WPFCalculator
         {
             InitializeComponent();
         }
-        private void tbx_TextChanged_Expression(object sender, TextChangedEventArgs e) { }
+        
+        private void tbx_TextChanged_Expression(object sender, TextChangedEventArgs e){ }
 
         private void tbx_TextChanged_Rights(object sender, TextChangedEventArgs e) { }
-        private void btn_Click(object sender, RoutedEventArgs e) 
+
+        private void btn_Refresh(object sender, RoutedEventArgs e)
         {
+            graphicPlot.Reset();
+            double[] dataX;
+            double[] dataY;
             CanvasDrawer canvasDrawer = new CanvasDrawer();
-            canvasDrawer.RefreshGraphic(tbxExpression.Text, tbxStart.Text, tbxEnd.Text, tbxStep.Text, tbxRange.Text);
+            dataX = canvasDrawer.GetPointsX(tbxExpression.Text, tbxStart.Text, tbxEnd.Text, tbxStep.Text);
+            dataY = canvasDrawer.GetPointsY(tbxExpression.Text, tbxStart.Text, tbxEnd.Text, tbxStep.Text);
+            graphicPlot.Plot.Add.Scatter(dataX, dataY);
+            graphicPlot.Refresh();
         }
     }
 }
