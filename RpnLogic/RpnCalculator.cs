@@ -1,41 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace RpnLogic
+﻿namespace RpnLogic
 {
-    public abstract class Token
+    class TokenCreator
     {
+        public static List<Operation> _availableOperations = new List<Operation>()
+        {
+            new Plus(), new Minus(), new Divide(), new Multiply(), new Logarithm(), new Sin(), new Cos(), new Tg(), new Ctg(), new Exponentiation(), new Root(), new SquareRoot(), new LogarithmNatural()
+        };
+        public static Token Create(string str)
+        {
+            if (char.IsDigit(str.First()))
+            {
+                return new Number(str);
+            }
+            return CreateOperation(str);
+        }
+        public static Operation CreateOperation(string name)
+        {
+            return _availableOperations.FirstOrDefault(op => op.Name.Equals(name));
+        }
 
     }
-
-    class Number : Token
+    public abstract class Token { }
+    public class Number : Token
     {
         public float Value { get; }
-
+        public Number (string str)
+        {
+            Value = (float.Parse(str));
+        }
         public Number(float value)
         {
-            Value = value;
+            Value = value;  
+        }
+        public static Number operator +(Number a, Number b)
+        {
+            return new Number(a.Value + b.Value);
+        }
+        public static Number operator -(Number a, Number b)
+        {
+            return new Number(a.Value - b.Value);
+        }
+        public static Number operator *(Number a, Number b)
+        {
+            return new Number(a.Value * b.Value);
+        }
+        public static Number operator /(Number a, Number b)
+        {
+            return new Number(a.Value / b.Value);
         }
         public override string ToString()
         {
             return "" + Value;
         }
 
-    }
-
-    class Operation : Token
-    {
-        public char Operator { get; }
-
-        public Operation(char op)
-        {
-            Operator = op;
-        }
-        public override string ToString()
-        {
-            return "" + Operator;
-        }
     }
 
     class Parenthesis : Token
@@ -54,22 +71,24 @@ namespace RpnLogic
 
     public class RpnCalculator
     {
-        public static double CalculateExpression(string userInput, string x)
+        public static float CalculateExpression(string userInput, string x)
         {
-            double result = CalculateWithRPN(ToRPN(Parse(userInput, x)));
+            float result = CalculateWithRPN(ToRPN(Parse(userInput, x)));
             return result;
         }
         public static List<Token> Parse(string input, string variable)
         {
             List<Token> tokenList = new List<Token>();
 
-            string newInput = ((input.Replace("x", '(' + variable + ')')).Replace("-(", "-1*(") + ' ').Replace(".", ",");
+            input = (input.Replace("x", '(' + variable + ')').Replace("-(", "-1*(") + ' ').Replace(".", ",");
             string number = "";
-            for (int i = 0; i < newInput.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (char.IsDigit(newInput[i]) || newInput[i] == ',')
+                
+                if ((char.IsDigit(input[i]) || input[i] == ',')) 
                 {
-                    number += newInput[i];
+                    number += input[i];
+
                     continue;
                 }
                 else if (!string.IsNullOrEmpty(number))
@@ -77,21 +96,35 @@ namespace RpnLogic
                     tokenList.Add(new Number(float.Parse(number)));
                     number = "";
                 }
-
-                if (newInput[i] == '*' || newInput[i] == '/' || newInput[i] == '+' || newInput[i] == '-')
+                if (!char.IsDigit(input[i]) && (i != input.Length-1) && input[i] != ';')
                 {
-                    if ((newInput[i] == '-' && i == 0) || (newInput[i] == '-' && newInput[i - 1] == '('))
+                    string function = string.Empty;
+                    if ((input[i] == '-' && i == 0 && char.IsDigit(input[i+1])) || (input[i] == '-' && input[i - 1] == '('))
                     {
-                        number += newInput[i];
+                        number += input[i];
                         continue;
                     }
-                    tokenList.Add(new Operation(newInput[i]));
+                    if (input[i] == '(' || input[i] == ')') 
+                    {
+                        tokenList.Add(new Parenthesis(input[i]));
+                        continue;
+                    }
+                    string rest = string.Empty;
+                    for (int j = i; j < input.Length; j++)
+                    {
+                        rest += input[j];
+                    }
+                    foreach (Operation op in TokenCreator._availableOperations)
+                    {
+                        if (op.Name == rest.Substring(0, op.Name.Length))
+                        {
+                            function += op.Name;
+                            i += op.Name.Length - 1;
+                            break;
+                        }
+                    }
+                    tokenList.Add(TokenCreator.Create(function));
                     continue;
-                }
-
-                if (newInput[i] == '(' || newInput[i] == ')')
-                {
-                    tokenList.Add(new Parenthesis(newInput[i]));
                 }
             }
             return tokenList;
@@ -111,7 +144,7 @@ namespace RpnLogic
                 else if (token is Operation)
                 {
                     while (stack.Count > 0 && stack.Peek() is Operation &&
-                           GetPriority((stack.Peek() as Operation).Operator) >= GetPriority((token as Operation).Operator))
+                           (stack.Peek() as Operation).Priority >= (token as Operation).Priority)
                     {
                         result.Add(stack.Pop());
                     }
@@ -149,45 +182,27 @@ namespace RpnLogic
 
         public static float CalculateWithRPN(List<Token> rpn)
         {
-            Stack<float> stack = new Stack<float>();
+            Stack<Number> stack = new Stack<Number>();
 
             foreach (var token in rpn)
             {
                 if (token is Number)
-                {
-                    stack.Push((token as Number).Value);
+                {   
+                    stack.Push((Number)token);
                 }
                 else if (token is Operation)
                 {
-                    float num2 = stack.Pop();
-                    float num1 = stack.Pop();
-                    char op = (token as Operation).Operator;
-                    float intermediateResult = Calculate(op, num1, num2);
+                    Operation op = (token as Operation);
+                    Number[] args = new Number[op.ArgsCount];
+                    for (int i = 0; i < op.ArgsCount; i++)
+                    {
+                        args[i] = stack.Pop();
+                    }
+                    Number intermediateResult = op.Execute(args);
                     stack.Push(intermediateResult);
                 }
             }
-            return stack.Peek();
-        }
-
-        private static float Calculate(char op, float num1, float num2)
-        {
-            switch (op)
-            {
-                case '+': return num1 + num2;
-                case '-': return num1 - num2;
-                case '*': return num1 * num2;
-                case '/': return num1 / num2;
-                default: throw new Exception("Unknown operation");
-            }
-        }
-
-        private static int GetPriority(char op)
-        {
-            if (op == '*' || op == '/')
-                return 2;
-            if (op == '+' || op == '-')
-                return 1;
-            return 0;
+            return stack.Peek().Value;
         }
     }
 }

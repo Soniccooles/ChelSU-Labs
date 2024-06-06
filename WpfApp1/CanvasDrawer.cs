@@ -1,15 +1,9 @@
 ﻿using RpnLogic;
-using System;
-using System.Collections.Generic;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace ConsoleCalculator
 {
     public class CanvasDrawer
     {
-        public double[] GetPointsX(string expression, string start, string end, string step)
+        public static double[] GetPointsX(string expression, string start, string end, string step)
         {
             int pointsNumber = (int)Math.Floor(((double.Parse(end) - double.Parse(start)) / double.Parse(step) + 1));
             double[] dataX = new double[pointsNumber];
@@ -19,7 +13,7 @@ namespace ConsoleCalculator
             }
             return dataX;
         }
-        public double[] GetPointsY(string expression, string start, string end, string step)
+        public static double[] GetPointsY(string expression, string start, string end, string step)
         {
             int pointsNumber = (int)Math.Floor(((double.Parse(end) - double.Parse(start)) / double.Parse(step) + 1));
             double[] dataY = new double[pointsNumber];

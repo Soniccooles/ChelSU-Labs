@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFCalculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Foreground="#FFFF7500">
     <Grid x:Name="CalculatorGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="42*"/>
@@ -14,37 +14,38 @@
             <ColumnDefinition Width="323*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="107*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="97*"/>
             <RowDefinition Height="51*"/>
             <RowDefinition Height="150*"/>
             <RowDefinition Height="126*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="tbxStart" HorizontalAlignment="Left" Margin="506,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2">
+        <TextBox x:Name="tbxStart" HorizontalAlignment="Left" Margin="506,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="Tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2" Grid.Row="1">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <TextBlock x:Name="tbkExpression" HorizontalAlignment="Left" Margin="10,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" FontSize="20" FontFamily="Times New Roman" Grid.ColumnSpan="3"><Run Text="Введите"/><Run Text=" "/><Run Language="ru-ru" Text="уравнение графика"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-        <TextBox x:Name="tbxStep" HorizontalAlignment="Left" Margin="504,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Row="2" Grid.Column="2">
+        <TextBlock x:Name="tbkExpression" HorizontalAlignment="Left" Margin="42,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="209" FontSize="20" FontFamily="Times New Roman" Grid.ColumnSpan="3" Grid.Row="1"><Run Text="Введите"/><Run Text=" "/><Run Language="ru-ru" Text="уравнение графика"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+        <TextBox x:Name="tbxStep" HorizontalAlignment="Left" Margin="504,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="Tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Row="3" Grid.Column="2" Text="1">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <TextBlock x:Name="tbkStart" HorizontalAlignment="Left" Margin="506,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="78" FontSize="18" FontFamily="Arial" Grid.Column="2"><Run Language="ru-ru" Text="Начало"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-        <TextBlock x:Name="tbkEnd" HorizontalAlignment="Left" Margin="506,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="65" FontSize="18" FontFamily="Arial" Text="Конец" Grid.Column="2"/>
-        <TextBlock x:Name="tbkStep" HorizontalAlignment="Left" Margin="506,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="45" FontSize="18" FontFamily="Arial" Text="Шаг" RenderTransformOrigin="1.564,1.048" Grid.Row="2" Grid.Column="2"/>
-        <TextBox x:Name="tbxExpression" HorizontalAlignment="Left" Margin="102,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="388" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2">
+        <TextBlock x:Name="tbkStart" HorizontalAlignment="Left" Margin="506,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="78" FontSize="18" FontFamily="Arial" Grid.Column="2" Grid.RowSpan="2"><Run Language="ru-ru" Text="Начало"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+        <TextBlock x:Name="tbkEnd" HorizontalAlignment="Left" Margin="506,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="65" FontSize="18" FontFamily="Arial" Text="Конец" Grid.Column="2" Grid.Row="1"/>
+        <TextBlock x:Name="tbkStep" HorizontalAlignment="Left" Margin="506,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="45" FontSize="18" FontFamily="Arial" Text="Шаг" RenderTransformOrigin="1.564,1.048" Grid.Row="3" Grid.Column="2"/>
+        <TextBox x:Name="tbxExpression" HorizontalAlignment="Left" Margin="102,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="388" TextChanged="Tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2" Grid.Row="1">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <TextBox x:Name="tbxEnd" HorizontalAlignment="Left" Margin="504,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2" Grid.RowSpan="2">
+        <TextBox x:Name="tbxEnd" HorizontalAlignment="Left" Margin="504,97,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="Tbx_TextChanged_Expression" FontSize="20" FontFamily="Times New Roman" Height="30" Background="#FFA78FFF" Grid.Column="2" Grid.RowSpan="2" Grid.Row="1">
             <TextBox.Effect>
                 <DropShadowEffect/>
             </TextBox.Effect>
         </TextBox>
-        <ScottPlot:WpfPlot x:Name="graphicPlot" Margin="42,107,158,86" FontSize="18" Grid.RowSpan="4" Grid.ColumnSpan="3" />
-        <Button x:Name="btnCalculate" Grid.Column="2" Content="Вычислить" HorizontalAlignment="Left" Margin="504,110,0,0" Grid.Row="2" VerticalAlignment="Top" Click="btn_Refresh" Background="#FFA78FFF" Width="130" Height="30" FontSize="18">
+        <ScottPlot:WpfPlot x:Name="graphicPlot" Background="LightBlue" Margin="42,97,158,10" FontSize="18" Grid.RowSpan="3" Grid.Row="1" Grid.ColumnSpan="3" Foreground="#FFFF7500" />
+        <Button x:Name="btnCalculate" Grid.Column="2" Content="Вычислить" HorizontalAlignment="Left" Margin="504,110,0,0" Grid.Row="3" VerticalAlignment="Top" Click="Btn_Refresh" Background="#FFA78FFF" Width="130" Height="30" FontSize="22" Foreground="Black">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
